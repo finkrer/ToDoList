@@ -60,6 +60,16 @@ namespace ToDoList
         }
 
         [Test]
+        public void Not_Add_Item_When_It_Was_Removed_With_Greater_Timestamp(
+            [Values(userA, userB, userC)] int removingUserId,
+            [Values(200, 101, 100)] long removingTimestamp)
+        {
+            list.RemoveEntry(42, removingUserId, removingTimestamp);
+            list.AddEntry(42, userA, "Build project", 100);
+            AssertListEmpty();
+        }
+
+        [Test]
         public void Not_Update_Name_When_Less_Experienced_User_Adds_Entry()
         {
             list.AddEntry(42, userA, "Create project", 100);
